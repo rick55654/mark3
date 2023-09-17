@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <parameters>$(find mark3)/config/control.yaml</parameters> 
+    </plugin>
+  </gazebo>
+
+
+
+<ros2_control name="GazeboSystem" type="system">
+ <hardware>
+    <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+ </hardware>
+
+ <joint name="left_wheel_joint">
+ <command_interface name="velocity">
+ <param name="min">-10</param> 
+ <param name="max">10</param>
+ </command_interface>
+ <state_interface name="position"/> 
+ <state_interface name="velocity"/>
+ </joint> 
+
+ <joint name="right_wheel_joint">
+ <command_interface name="velocity">
+ <param name="min">-10</param> 
+ <param name="max">10</param>
+ </command_interface>
+ <state_interface name="position"/> 
+ <state_interface name="velocity"/>
+ </joint> 
+
+
+
+
+
+
+
+ <!--joint name="wheel_joint_fr">
+ <command_interface name="velocity">
+ <param name="min">-10</param> 
+ <param name="max">10</param>
+ </command_interface>
+ <state_interface name="position"/> 
+ <state_interface name="velocity"/>
+ </joint> 
+
+
+ <joint name="wheel_joint_fl">
+ <command_interface name="velocity">
+ <param name="min">-10</param> 
+  <param name="max">10</param>
+  </command_interface>
+ <state_interface name="position"/> 
+ <state_interface name="velocity"/>
+ </joint> 
+
+
+  <joint name="wheel_joint_bl">
+ <command_interface name="velocity">
+ <param name="min">-10</param> 
+ <param name="max">10</param>
+ </command_interface>
+ <state_interface name="position"/> 
+ <state_interface name="velocity"/>
+ </joint> 
+
+
+ <joint name="wheel_joint_br">
+ <command_interface name="velocity">
+  <param name="min">-10</param> 
+  <param name="max">10</param>
+ </command_interface>
+ <state_interface name="position"/> 
+ <state_interface name="velocity"/>
+ </joint--> 
+
+
+ <!--####################arm#######################-->
+
+ <joint name="arm_joint_0">
+ <command_interface name="position"/>
+ <command_interface name="effort"/>
+ <state_interface name="position">
+ </state_interface> 
+ <state_interface name="velocity"/>
+ </joint>
+
+ <joint name="arm_joint_1">
+ <command_interface name="position"/>
+ <command_interface name="effort"/>
+ <state_interface name="position">
+
+ </state_interface>
+ <state_interface name="velocity"/>
+ </joint>
+
+
+ <joint name="arm_joint_2">
+ <command_interface name="position"/>
+ <command_interface name="effort"/>
+ <state_interface name="position">
+
+ </state_interface>
+ <state_interface name="velocity"/>
+ </joint>
+
+
+ <joint name="arm_joint_3">
+ <command_interface name="position"/>
+ <command_interface name="effort"/>
+ <state_interface name="position">
+
+ </state_interface>
+ <state_interface name="velocity"/>
+ </joint>
+
+
+ <joint name="arm_joint_4">
+ <command_interface name="position"/>
+ <command_interface name="effort"/>
+ <state_interface name="position">
+
+ </state_interface>
+ <state_interface name="velocity"/>
+ </joint>
+
+
+ <joint name="arm_joint_5">
+ <command_interface name="position"/>
+ <command_interface name="effort"/>
+ <state_interface name="position">
+ </state_interface>
+ <state_interface name="velocity"/>
+ </joint>
+
+
+</ros2_control>
+
+
+</robot>
