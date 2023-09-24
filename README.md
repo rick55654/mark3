@@ -7,6 +7,7 @@ source install/setup.bash
 ros2 launch mark3 launch_sim.launch.py world:=src/mark3/worlds/rick.world
 
 #launch without map
+
 ros2 launch mark3 launch_sim.launch.py
 
 # SLAM
