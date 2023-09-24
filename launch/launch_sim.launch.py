@@ -9,6 +9,8 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch_ros.actions import Node
 
+from launch.actions import TimerAction
+
 
 
 def generate_launch_description():
@@ -36,10 +38,44 @@ def generate_launch_description():
                     get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]),
                      launch_arguments={'extra_gazebo_args': '--ros-args --params-file ' + gazebo_params_path }.items()
              )
-    
-    
+    # Rviz2 
+    rviz = get_package_share_directory(package_name)
 
-    
+    rviz2 = Node(
+    name="rviz2",
+    package="rviz2",
+    executable="rviz2",
+    arguments=['-d', os.path.join(rviz, 'config', 'view_bot.rviz')],
+    )
+
+
+    joy_params = os.path.join(get_package_share_directory(package_name),'config','joystick.yaml')
+
+    joy_node = Node(
+    package='joy',
+    executable='joy_node',
+    parameters=[joy_params,{'use_sim_time': True}],
+    )
+
+
+    teleop_node = Node(
+    package='teleop_twist_joy', 
+    executable='teleop_node',        
+    name='teleop_node',        
+    parameters=[joy_params, {'use_sim_time': True}],       
+    remappings=[('/cmd_vel','/cmd_vel_joy')],
+    )
+                
+
+    twist_mux_params = os.path.join(get_package_share_directory(package_name),'config','twist_mux.yaml')
+
+    twist_mux = Node(
+    package="twist_mux",
+    executable="twist_mux",
+    parameters=[twist_mux_params, {'use_sim_time': True}],
+    remappings=[('/cmd_vel_out','/diff_cont/cmd_vel_unstamped')],
+    )
+
     diff_drive_spawner = Node(
     package="controller_manager",
     executable="spawner.py",
@@ -72,9 +108,14 @@ def generate_launch_description():
     # Launch them all!
     return LaunchDescription([
         rsp,
+        twist_mux,
+        joy_node,
+        teleop_node,
         gazebo,
         spawn_entity,
         joint_broad_spawner,
         diff_drive_spawner,
         joint_trajectory_controller_spawner,
+        TimerAction(period=6.0,
+            actions=[rviz2])
     ])

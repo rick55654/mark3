@@ -1,7 +1,7 @@
 controller_manager:
   ros__parameters:
     use_sim_time: true
-    update_rate: 100  # Hz
+    update_rate: 400  # Hz
 
     joint_trajectory_controller:
      type: joint_trajectory_controller/JointTrajectoryController
@@ -31,7 +31,7 @@ joint_trajectory_controller:
 diff_cont:
  ros__parameters:
    use_sim_time: true
-   update_rate: 100
+   update_rate: 400
    base_frame_id: base_link
    use_stamped_vel: false
 
